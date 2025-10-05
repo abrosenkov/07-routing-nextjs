@@ -22,11 +22,12 @@ const api = axios.create({
   },
 });
 
-export const fetchNotes = async (search: string, page: number): Promise<NotesApiResponse> => {
+export const fetchNotes = async (search: string, page: number, tag?: string): Promise<NotesApiResponse> => {
     const response = await api.get<NotesApiResponse>("/notes", {
         params: {
             search,
             page,
+            tag,
         }
     });
     return response.data;
@@ -46,3 +47,12 @@ export const deleteNote = async (id: string): Promise<Note> => {
     const response = await api.delete<Note>(`/notes/${id}`);
     return response.data;
 }
+
+// export const fetchTags = async ( tag?: string): Promise<NotesApiResponse> => {
+//     const response = await api.get<NotesApiResponse>("/notes", {
+//         params: {
+//             tag,
+//         }
+//     });
+//     return response.data;
+// }
