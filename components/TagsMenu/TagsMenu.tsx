@@ -6,6 +6,8 @@ import css from "./TagsMenu.module.css";
 export default function TagsMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen((prev) => !prev);
+  const close = () => setIsOpen(false);
+
   const tags = ["All", "Todo", "Work", "Personal", "Meeting", "Shopping"];
 
   useEffect(() => {
@@ -13,7 +15,7 @@ export default function TagsMenu() {
       const target = e.target as HTMLElement;
 
       if (!target.closest(`.${css.menuContainer}`)) {
-        setIsOpen(false);
+        close();
       }
     };
 
@@ -31,11 +33,15 @@ export default function TagsMenu() {
       <button onClick={toggle} className={css.menuButton}>
         Notes ▾
       </button>
+
       {isOpen && (
         <ul className={css.menuList}>
           {tags.map((tag) => (
             <li key={tag} className={css.menuItem}>
-              <a href={`/notes/filter/${tag}`} className={css.menuLink}>
+              <a
+                href={`/notes/filter/${tag}`}
+                className={css.menuLink}
+                onClick={close}>
                 {tag}
               </a>
             </li>

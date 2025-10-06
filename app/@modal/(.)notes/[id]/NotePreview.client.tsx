@@ -45,6 +45,7 @@ export default function NotePreview() {
               <h2>{data.title}</h2>
             </div>
             <p className={css.content}>{data.content}</p>
+            <p className={css.tag}>{data.tag}</p>
             <p className={css.date}>{formatDate(data.createdAt)}</p>
           </div>
         )}
