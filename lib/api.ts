@@ -47,12 +47,3 @@ export const deleteNote = async (id: string): Promise<Note> => {
     const response = await api.delete<Note>(`/notes/${id}`);
     return response.data;
 }
-
-// export const fetchTags = async ( tag?: string): Promise<NotesApiResponse> => {
-//     const response = await api.get<NotesApiResponse>("/notes", {
-//         params: {
-//             tag,
-//         }
-//     });
-//     return response.data;
-// }

@@ -1,12 +1,30 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./TagsMenu.module.css";
 
 export default function TagsMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
+  const toggle = () => setIsOpen((prev) => !prev);
   const tags = ["All", "Todo", "Work", "Personal", "Meeting", "Shopping"];
+
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+
+      if (!target.closest(`.${css.menuContainer}`)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClick);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
+  }, [isOpen]);
 
   return (
     <div className={css.menuContainer}>
@@ -15,10 +33,10 @@ export default function TagsMenu() {
       </button>
       {isOpen && (
         <ul className={css.menuList}>
-          {tags.map((note) => (
-            <li key={note} className={css.menuItem}>
-              <a href={`/notes/filter/${note}`} className={css.menuLink}>
-                {note}
+          {tags.map((tag) => (
+            <li key={tag} className={css.menuItem}>
+              <a href={`/notes/filter/${tag}`} className={css.menuLink}>
+                {tag}
               </a>
             </li>
           ))}
